@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Live view of Chainweb miner voting and fork state, parsed from block header ForkState flags.">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>Chainweb Fork Monitor</title>
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="brand">
+            <img src="img/logo.svg" alt="Kadena Community Edition" class="brand-logo">
+            <div class="brand-divider"></div>
+            <h1 class="brand-title">Fork Monitor</h1>
+        </div>
+        <div class="header-status">
+            <span class="badge" id="network">mainnet01</span>
+            <span class="status">
+                <span class="status-dot" id="status-dot"></span>
+                <span id="status-text">Connecting…</span>
+            </span>
+        </div>
+    </header>
+
+    <div class="banner" id="error-banner" hidden>
+        <span id="error-text"></span>
+        <button type="button" id="error-dismiss" aria-label="Dismiss">✕</button>
+    </div>
+
+    <main>
+        <section class="card hero-card">
+            <p class="tile-label">Fork vote support this epoch</p>
+            <p class="hero-value"><span id="support-pct">–</span><span class="hero-unit">%</span></p>
+            <p class="hero-sub" id="verdict">Waiting for first cut…</p>
+            <div class="meter" role="img" aria-label="Vote support versus the two-thirds activation threshold">
+                <div class="meter-track">
+                    <div class="meter-fill" id="support-fill"></div>
+                    <div class="meter-threshold" id="threshold-marker"></div>
+                </div>
+                <div class="meter-scale">
+                    <span>0%</span>
+                    <span class="meter-threshold-label" id="threshold-label">66.7% to activate</span>
+                    <span>100%</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="tile-grid">
+            <div class="card tile">
+                <p class="tile-label">Current fork number</p>
+                <p class="tile-value" id="fork-number">–</p>
+                <p class="tile-sub" id="fork-number-sub">across all chains</p>
+            </div>
+            <div class="card tile">
+                <p class="tile-label">Votes this epoch</p>
+                <p class="tile-value" id="votes">–</p>
+                <p class="tile-sub" id="votes-sub">avg per chain</p>
+            </div>
+            <div class="card tile">
+                <p class="tile-label">Epoch progress</p>
+                <p class="tile-value" id="epoch-progress">–</p>
+                <p class="tile-sub" id="epoch-progress-sub">of 14,400 blocks</p>
+            </div>
+            <div class="card tile">
+                <p class="tile-label">Next decision</p>
+                <p class="tile-value" id="decision-eta">–</p>
+                <p class="tile-sub" id="decision-sub">at the epoch boundary</p>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="section-head">
+                <h2>Fork epoch timeline</h2>
+                <span class="section-note" id="phase-label"></span>
+            </div>
+            <div class="timeline" role="img" aria-label="Position within the current fork epoch">
+                <div class="timeline-track">
+                    <div class="timeline-progress" id="timeline-progress"></div>
+                    <div class="timeline-counting"></div>
+                </div>
+                <div class="timeline-scale">
+                    <span>Voting · 14,280 blocks</span>
+                    <span>Counting · 120</span>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-head">
+                <h2>Chains</h2>
+                <span class="section-note" id="cut-info"></span>
+            </div>
+            <div class="chain-grid" id="chain-grid"></div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>
+            Data from <a href="https://api.chainweb-community.org" rel="noopener">api.chainweb-community.org</a>
+            · ForkState per
+            <a href="https://github.com/kadena-io/chainweb-node/blob/master/src/Chainweb/ForkState.hs" rel="noopener">Chainweb.ForkState</a>
+            · Refreshes every 30 s
+        </p>
+    </footer>
+
+    <template id="chain-tile-template">
+        <div class="card chain-tile">
+            <div class="chain-head">
+                <span class="chain-name"></span>
+                <span class="chain-phase"><span class="phase-dot"></span><span class="phase-text"></span></span>
+            </div>
+            <p class="chain-height mono"></p>
+            <p class="chain-votes"></p>
+            <div class="minibar"><div class="minibar-fill"></div></div>
+        </div>
+    </template>
+
+    <script src="chainweb.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
