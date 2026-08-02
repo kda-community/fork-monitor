@@ -17,7 +17,7 @@ jobs:
       - name: Prepare dist directory
         run: | 
           mkdir -p dist
-          cp *.js *.html *.js dist
+          cp *.js *.html *.css dist
           cp -r img dist
 
       - name: Add CNAME
