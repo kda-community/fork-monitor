@@ -1,0 +1,44 @@
+name: Publish on GH Pages
+
+on:
+  push:
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Prepare dist directory
+        run: | 
+          mkdir -p dist
+          cp *.js *.html *.js dist
+          cp -r img dist
+
+      - name: Add CNAME
+        run: echo "fork.kda-chain.org" > ./dist/CNAME
+
+      - name: Upload production build files
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./dist
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v5
