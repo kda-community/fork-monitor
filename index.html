@@ -34,6 +34,48 @@
     </div>
 
     <main>
+        
+        <section class="card">
+            <details class="explainer">
+                <summary>How on-chain voting works</summary>
+                <div class="explainer-body">
+                    <p>
+                        Miners state their preference in every block they mine: the ForkState
+                        field at the start of the header — the flag this page parses — carries
+                        one optional vote for the next fork.
+                    </p>
+                    <ul>
+                        <li><strong>Vote.</strong> For 119 hours (14,280 blocks) each new block can add one vote to its chain's running total.</li>
+                        <li><strong>Count.</strong> In the final hour (120 blocks) the chains average their totals with their neighbors, converging on a single network-wide result.</li>
+                        <li><strong>Decide.</strong> If at least two-thirds of the voting blocks signaled support, the new rules apply from the first block of the next epoch; otherwise the current rules stay and voting starts over.</li>
+                    </ul>
+                    <p>
+                        Upgrades therefore activate only when a supermajority of hashrate backs
+                        them, not on a deadline set by developers. For the full story, read
+                        <a href="https://medium.com/@communitykadena/kadena-on-chain-voting-for-miners-on-the-way-to-decentralization-2bc0047df3d2" rel="noopener">Kadena — on-chain voting for miners</a>
+                        by KDA Community Edition.
+                    </p>
+                </div>
+            </details>
+        </section>
+
+        <section class="card">
+            <div class="section-head">
+                <h2>Fork epoch timeline</h2>
+                <span class="section-note" id="phase-label"></span>
+            </div>
+            <div class="timeline" role="img" aria-label="Position within the current fork epoch">
+                <div class="timeline-track">
+                    <div class="timeline-progress" id="timeline-progress"></div>
+                    <div class="timeline-counting"></div>
+                </div>
+                <div class="timeline-scale">
+                    <span>Voting · 14,280 blocks</span>
+                    <span>Counting · 120</span>
+                </div>
+            </div>
+        </section>
+        
         <section class="card hero-card">
             <p class="tile-label">Fork vote support this epoch</p>
             <p class="hero-value"><span id="support-pct">–</span><span class="hero-unit">%</span></p>
@@ -74,46 +116,7 @@
             </div>
         </section>
 
-        <section class="card">
-            <div class="section-head">
-                <h2>Fork epoch timeline</h2>
-                <span class="section-note" id="phase-label"></span>
-            </div>
-            <div class="timeline" role="img" aria-label="Position within the current fork epoch">
-                <div class="timeline-track">
-                    <div class="timeline-progress" id="timeline-progress"></div>
-                    <div class="timeline-counting"></div>
-                </div>
-                <div class="timeline-scale">
-                    <span>Voting · 14,280 blocks</span>
-                    <span>Counting · 120</span>
-                </div>
-            </div>
-        </section>
-
-        <section class="card">
-            <details class="explainer">
-                <summary>How on-chain voting works</summary>
-                <div class="explainer-body">
-                    <p>
-                        Miners state their preference in every block they mine: the ForkState
-                        field at the start of the header — the flag this page parses — carries
-                        one optional vote for the next fork.
-                    </p>
-                    <ul>
-                        <li><strong>Vote.</strong> For 119 hours (14,280 blocks) each new block can add one vote to its chain's running total.</li>
-                        <li><strong>Count.</strong> In the final hour (120 blocks) the chains average their totals with their neighbors, converging on a single network-wide result.</li>
-                        <li><strong>Decide.</strong> If at least two-thirds of the voting blocks signaled support, the new rules apply from the first block of the next epoch; otherwise the current rules stay and voting starts over.</li>
-                    </ul>
-                    <p>
-                        Upgrades therefore activate only when a supermajority of hashrate backs
-                        them, not on a deadline set by developers. For the full story, read
-                        <a href="https://medium.com/@communitykadena/kadena-on-chain-voting-for-miners-on-the-way-to-decentralization-2bc0047df3d2" rel="noopener">Kadena — on-chain voting for miners</a>
-                        by KDA Community Edition.
-                    </p>
-                </div>
-            </details>
-        </section>
+     
 
         <section>
             <div class="section-head">
